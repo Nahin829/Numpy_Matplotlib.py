@@ -201,3 +201,30 @@ angle_degrees = np.degrees(np.arccos(after_dot))
 print("Angle between vector1 and vector2 in degrees:", angle_degrees)
 after_cross=cross_product / (np.linalg.norm(vector1) * np.linalg.norm(vector2))
 angle_in_degrees = np.degrees(np.arcsin(after_cross))
+import matplotlib.pyplot as plt
+import numpy as np
+
+# Define the x range, avoiding points near the asymptotes at odd multiples of pi/2
+x = np.linspace(-1 * np.pi, 1 * np.pi, 1000)
+y = np.sin(x)
+
+# Identify and replace points where the function jumps from +inf to -inf with NaN to prevent connecting lines
+y[:-1][np.diff(y) < 0] = np.nan
+
+# Plot the function with axis limits to focus on the main behavior
+plt.plot(x, y)
+plt.ylim(-10, 10)
+plt.xlim(-1 * np.pi, 1 * np.pi)
+plt.grid(True)
+plt.xlabel("x")
+plt.ylabel("$\\tan(x)$")
+plt.title("$y = \\sin(x)$", fontsize=14)
+
+# Set x-axis labels to show key angles in radians
+radian_multiples = [-2, -3/2, -1, -1/2, 0, 1/2, 1, 3/2, 2]
+radians = [n * np.pi for n in radian_multiples]
+radian_labels = ['$-2\\pi$', '$-3\\pi/2$', '$-\\pi$', '$-\\pi/2$', '0', '$\\pi/2$', '$\\pi$', '$3\\pi/2$', '$2\\pi$']
+plt.xticks(radians, radian_labels)
+
+plt.show()   
+
